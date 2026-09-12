@@ -1,0 +1,10 @@
+let a = prompt("I have eaten and eaten, all of summer... I gotta do some workout. Could you recommend me one?");
+let b = prompt("Hmm... Could you recommend me another one?");
+let c = prompt("Oh that's a good one! And another one?");
+let d = prompt("One more por favor.");
+let workout = [];
+workout.push(a);
+workout.push(b);
+workout.push(c);
+workout.push(d);
+print(getRandomInt(4));
