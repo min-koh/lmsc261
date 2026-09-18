@@ -58,3 +58,80 @@ spiritAnimal.push(a); // spiritAnimal.push("what's your spirit animal?");
 
 Math.random();
 Print
+***
+
+## Conditionals
+Different actions for different conditions
+{}: scope
+
+const minHeight = 3;
+let myHeight = 5;
+let isTallEnough = myHeight >= minHeight; // true
+
+if (isTallEnough){
+    let message = "LFG you are: " + myHeight + " tall"
+    print(message);
+} else {
+    print("See you next year!")
+}
+print("Amusement parks are so fun!");
+
+***
+let numInstruments = prompt("How many instruments do you play?");
+
+if(numInstruments > 1){
+    print("Wow you are a multi-instrumentalist!");
+
+} else if (numInstruments == 1){ // same type, decimal
+    print("Oh Okay");
+
+} else if (numInstruments < 0){
+    print("What do you mean?")
+
+} else {
+    print("It's all good music is so hard.");
+}
+
+print("see ya later!");
+
+***
+let numInstruments = prompt("How many instruments do you play?");
+
+if(numInstruments > 1){ // requires boolean
+    print("Wow you are a multi-instrumentalist!");
+
+} else if (numInstruments == 1){ // same type, decimal, // requires boolean
+    print("Oh Okay");
+
+} else if (numInstruments < 0){
+    print("What do you mean?")
+
+} else { // boolean not required
+    print("It's all good music is so hard.");
+}
+
+print("see ya later!");
+
+midterm: drawing with PI
+p5.js - orbit control example
+audio plugin design?
+
+***
+Those 3 are same
+i = i + 1
+i += 1
+i++
+
+***
+For loop
+for (Number variable; boolean; expression(mathematic));
+***
+
+const activities = ["babysit tadpoles",
+"flies for lunch",
+"tongue stretch",
+"swimming lesson"];
+
+let index = prompt("what's your index?)
+index = index % 4;
+print(activities[index])
