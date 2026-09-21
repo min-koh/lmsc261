@@ -121,10 +121,32 @@ Those 3 are same
 i = i + 1
 i += 1
 i++
+***
+let numInstruments = prompt("How many instruments do you play?");
+
+if(numInstruments > 1){ // requires boolean
+    print("Wow you are a multi-instrumentalist!");
+
+} else if (numInstruments == 1){ // same type, decimal, // requires boolean
+    print("Oh Okay");
+
+} else if (numInstruments == 0){
+    print("It's all good music is so hard.");
+
+} else { // boolean not required
+    print("???");
+}
+
+print("see ya later!");
+
 
 ***
 For loop
 for (Number variable; boolean; expression(mathematic));
+***
+for(let i = 0; i <= 10; i++){
+    print(i);
+}
 ***
 
 const activities = ["babysit tadpoles",
@@ -132,6 +154,42 @@ const activities = ["babysit tadpoles",
 "tongue stretch",
 "swimming lesson"];
 
-let index = prompt("what's your index?)
+// let index = prompt(("what's your index?)
 index = index % 4;
-print(activities[index])
+// print(activities[index])
+
+for(let i = 0(variable initialization); i <100(boolean); i++){
+    let modula = i (5 넣으면 0 나옴, 5를 5로 나누면 나머지가 0이니까)
+}
+
+***
+let games = [
+    "pokemon",
+    "ghost of tsushima",
+    "street fighter",
+    "civilization",
+    "project zomboid",
+    "lost in blue",
+    "GTA 5"
+];
+
+for(let index = 0; index < games.length; index++){
+    print(games[index]);
+}
+
+/* every time we have to update the number when we add game
+***
+const numGreencardsAvailable = 20;
+let numImmigrants = 120;
+
+let families = ["mom", "dad", "sis", "bro"]
+for (let p = 0); p < numImmigrants; p++){
+    if(p < numGreencardsAvailable){
+        print("welcome!");
+        for(let j = 0; j <4; j++){
+            print("heres tickets for your: " + families[j])
+        }
+    } else {
+        print("Please try again next year :)");
+    }
+}
