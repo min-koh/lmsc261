@@ -15,6 +15,9 @@
     ctx.fillStyle = "lightblue";
     ctx.fillRect(0, 0, w, h);
 
+    // rainbow parts:
+
+
     for(let i = 0; i < 7; i ++){
         let xPos = 300;
         let yPos = 300;
@@ -23,13 +26,14 @@
         ctx.beginPath();
         ctx.arc(xPos,
                 yPos,
-                radius,
-                0,
-                Math.PI,
+                radius, 
+                0, // Math.random() * Math.PI,
+                Math.PI, // + Math.random() * Math.PI
                 true);
 
         ctx.strokeStyle = "pink";
-        ctx.lineWidth = 5;
+        ctx.lineWidth = 5; // Math.abs(i = ) (절댓값), i + 1이나 i - 1 해도 됨
+        ctx.lineCap = "round"
         ctx.stroke(); // stroke, fill 순서에 따라 두꼐가 달라짐.
     }
     
