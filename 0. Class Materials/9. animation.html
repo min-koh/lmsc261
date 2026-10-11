@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<body>
+    <canvas width="600" height="600" id="canvas" style="width: 600px; height: 600px;"></canvas>
+
+    <script>
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+    const w = canvas.width, h = canvas.height;
+
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = dpr, canvas.height= dpr;
+    ctx.scale(dpr, dpr);
+
+    ctx.fillStyle = "lightblue";
+    ctx.fillRect(0, 0, w, h);
+
+    let bodyColor = "#EEBEC8";
+    let dimpleColor = "#E994A0";
+    let eyeColorA = "#2F3869";
+    let eyeColorB = "#F4F4F6";
+
+    // draw body
+    let cx = w / 2, cy = h / 2;
+    ctx.beginPath();
+    ctx.arc(cx, cy, w * 0.3, 0, Math.PI * 2, false);
+    ctx.fillStyle = bodyColor;
+    ctx.fill();
+
+
+    function drawEye(eyeX, eyeY){
+        let eyeRadius = w * 0.025;
+        // eye base
+        ctx.beginPath();
+        ctx.ellipse(eyeX,
+                    eyeY, 
+                    eyeRadius,
+                    eyeRadius * 2,
+                    0,
+                    Math.PI * 2, 
+                    false);
+        ctx.fillStyle = eyeColorA;
+        ctx.fill();
+
+        // glimmer
+        ctx.beginPath()
+        ctx.arc(eyeX, eyeY - eyeRadius, eyeRadius * 0.65, 0, Math.PI * 2, false);
+        ctx.fillStyle = eyeColorB;
+        ctx.fill();
+    }
+
+    drawEye(cx - w * 0.075, cy - h * 0.1);
+    drawEye(cx + w * 0.075, cy - h * 0.1);
+
+    // draw mouth
+    ctx.beginPath();
+    ctx.ellipse(cx,
+                cy + h * 0.1,
+                w * 0.05,
+                w * 0.05,
+                0,
+                Math.PI * 2,
+                false)
+    ctx.fillStyle = dimpleColor
+    ctx.fill();
+
+    </script>
+</body>

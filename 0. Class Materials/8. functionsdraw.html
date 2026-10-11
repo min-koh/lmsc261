@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<body>
+    <canvas width="600" height="600" id="canvas" style="width: 600px; height: 600px;"></canvas>
+
+    <script>
+        const canvas = document.getElementById("canvas");
+        const ctx = canvas.getContext("2d");
+        const w = canvas.width, h = canvas.height;
+
+        const dpr = window.devicePixelRatio || 1;
+        canvas.width *= dpr;
+        canvas.height *= dpr;
+        ctx.scale(dpr, dpr);
+
+        ctx.fillStyle = "White";
+        ctx.fillRect(0, 0, w, h);
+
+        let isRed = true;
+        let isShrinking = true;
+
+        const xPos = [];
+        const yPos = [];
+        const radius = [];
+        const colors = [
+            "red",
+            "orange",
+            "yellow",
+            "green",
+            "blue",
+            "indigo",
+            "violet"
+        ]
+
+        function draw(){
+            ctx.fillStyle = 'grey';
+            ctx.fillRect(0, 0, w, h);
+
+            // draw a ball
+            for(let i = 0; i < xPos.length; i++){
+
+                ctx.beginPath();
+                ctx.arc(xPos[i], yPos[i], 10, 0, Math.PI * 2, true);
+                ctx.fillStyle = colors[i % colors.length];
+                ctx.fill();
+            }
+        }
+
+        draw();
+
+        let isDragging = false;
+        canvas.addEventListener("mousedown", (e) => {
+            isDragging = true;
+        })
+
+        canvas.addEventListener("mousemove", (e) => {
+            if(isDragging){
+                xPos.push(e.offsetX);
+                yPos.push(e.offsetY);
+                radius.push(Math.random * 10);
+                draw();
+            }
+        })
+
+        canvas.addEventListener("mouseup", (e) => {
+            isDragging = false;
+        })
+    </script>
+</body>
