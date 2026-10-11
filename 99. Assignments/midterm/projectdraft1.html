@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        h1 {
+            text-align: left;
+            font-family: Arial, sans-serif;
+            font-size: 26px;
+            margin: 20px 15px;
+        }
+        h2 {
+            text-align: left;
+            font-family: Arial, sans-serif;
+            font-size: 18px;
+            margin: 20px 15px;
+        }
+    </style>
+</head>
+<body>
+    <h1 id="title">Fish Toto's Happy Life</h1>
+    <h2 id="subtitle">Once you collect 10 pieces of food on top of the fish tank, you can feed Toto.</h2>
+
+    <canvas width="1000" height="1000" id="canvas" style="width: 1000px; height: 1000px;"></canvas>
+
+    <script>
+    // ----- fish name -----
+        let fishName = prompt("What's your fish's name?");
+        if (!fishName) {
+            fishName = "Toto"; // if canceled, or empty
+        }
+    
+    document.getElementById("title").innerText =
+        "Fish " + fishName + "'s Happy Life";
+    document.getElementById("subtitle").innerText =
+        "Once you collect 10 pieces of food on top of the fish tank, you can feed " + fishName + ".";
+
+    // ----- canvas -----
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+    const w = canvas.width;
+    const h = canvas.height;
+
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = w * dpr;
+    canvas.height= h * dpr;
+    ctx.scale(dpr, dpr);
+    
+    // ----- setup -----
+
+    // fish tank: x 250~750, y 250~750
+    const l = 250, r = 750, t = 250, b = 750;
+    // feed zone: x 250~750, y 0~250
+    function inFeedZone(x, y) {
+        return x > l && x < r && y > 0 && y < t;
+    }
+
+    // fish color
+    const fishColor = ["red", "orange", "yellow", "green", "blue", "navy", "purple"];
+    let colorIndex = 0;
+
+    // fish location, velocity default
+    let fishX = 500;
+    let fishY = 500;
+    let xVel = 3; // + - : direction
+
+    // food
+    let foods = [];
+    let isDropping = false;
+    let canFeed = true;
+
+    // ----- drawing -----
+    function drawFish() {
+        let dir = xVel > 0 ? 1 : -1; // right = 1, left = -1
+        //body, head, tail color
+        ctx.fillStyle = fishColor[colorIndex];
+        //body
+        ctx.beginPath();
+        ctx.fillRect(fishX -40, fishY - 20, 80, 40);
+        //head
+        ctx.beginPath();
+        ctx.arc(fishX + 40 * dir, fishY, 20, Math.PI * 0.5, Math.PI * 1.5, dir > 0);
+        ctx.fill();
+        //tail
+        ctx.beginPath();
+        ctx.moveTo(fishX - 40 * dir, fishY);
+        ctx.lineTo(fishX - 75 * dir, fishY - 20);
+        ctx.lineTo(fishX - 75 * dir, fishY + 20);
+        ctx.fill();
+        //eye
+        ctx.beginPath();
+        ctx.arc(fishX + 42 * dir, fishY - 7, 4, 0, Math.PI * 2, true);
+        ctx.fillStyle = "black";
+        ctx.fill();
+        //mouth
+        ctx.beginPath();
+        ctx.arc(fishX + 55 * dir, fishY + 6, 3, 0, Math.PI * 2, true);
+        ctx.fillStyle = "pink";
+        ctx.fill();
+    }
+
+    function draw() {
+        //sky
+        ctx.fillStyle = "yellow";
+        ctx.fillRect(0, 0, 1000, 1000);
+        //fish tank
+        ctx.fillStyle = "#BFE9FF";
+        ctx.fillRect(l, t, 500, 500);
+        ctx.lineWidth = 4;
+        ctx.strokeStyle = "white";
+        ctx.strokeRect(l, t, 500, 500);
+        //fish
+        drawFish();
+        //food
+        ctx.fillStyle = "brown";
+        for (let i = 0; i < foods.length; i++) {
+            ctx.beginPath();
+            ctx.arc(foods[i].x, foods[i].y, 6, 0, Math.PI * 2, true);
+            ctx.fill();
+        }
+    }
+
+    // ----- animation -----
+    function tick() {
+        fishX += xVel;
+
+        if (fishX + 75 > r) {
+            fishX = r - 75;
+            xVel = -(1 + Math.random() * 3);
+        }
+        if (fishX - 75 < l) {
+            fishX = l + 75;
+            xVel = 1 + Math.random() * 3;
+        }    
+
+    // dropping food
+        if (isDropping) {
+            let allLanded = true;
+
+            for (let i = 0; i < foods.length; i++) {
+                if (foods[i].y < b - 6){
+                    foods[i].y += 1.5;
+                    allLanded = false;
+                }
+            }
+            if (allLanded) {
+                isDropping = false;
+                setTimeout(() => {
+                    foods = [];
+                    canFeed = true;
+                    alert("I'm already full, Thank you tho!");
+                }, 1000);
+            }
+        }    
+
+        draw();
+        requestAnimationFrame(tick);
+    }
+
+    tick();
+
+    // ----- event -----
+    canvas.addEventListener("mousemove", (e) => {
+        if (canFeed && inFeedZone(e.offsetX, e.offsetY)) {
+            canvas.style.cursor = "pointer";
+        } else {
+            canvas.style.cursor = "default";
+        }
+    });
+
+    canvas.addEventListener("click", (e) => {
+        colorIndex = (colorIndex + 1) % fishColor.length;
+
+        if (canFeed && inFeedZone(e.offsetX, e.offsetY)) {
+            foods.push({ x: e.offsetX, y: e.offsetY});
+
+            if (foods.length === 10) {
+                canFeed = false;
+                isDropping = true;
+                canvas.style.cursor = "default";
+            }
+        }
+    });
+    </script>
+
+</body>
+
